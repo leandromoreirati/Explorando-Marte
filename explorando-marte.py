@@ -3,12 +3,12 @@ from itertools import islice
 
 
 class Direcoes(object):
-    west = {'x': -1, 'y': 0}
-    north = {'x': 0, 'y': 1}
-    east = {'x': 1, 'y': 0}
-    south = {'x': 0, 'y': -1}
+    w = {'x': -1, 'y': 0}
+    n = {'x': 0, 'y': 1}
+    e = {'x': 1, 'y': 0}
+    s = {'x': 0, 'y': -1}
 
-    posicao = {'W': west, 'N': north, 'E': east, 'S': south}
+    posicao = {'W': w, 'N': n, 'E': e, 'S': s}
 
     @staticmethod
     def proxima_direcao(comando, posicao_atual):
@@ -34,8 +34,7 @@ class Controle(object):
         mover = Direcoes.posicao[sonda.direcao]
         proxima_posicao = sonda.calculando_proxima_posicao(mover)
 
-        if proxima_posicao[0] not in range(0, self.mapa[0]+1) or \
-           proxima_posicao[1] not in range(0, self.mapa[1]+1):
+        if proxima_posicao[0] not in range(0, self.mapa[0]+1) or proxima_posicao[1] not in range(0, self.mapa[1]+1):
             return {"x": 0, "y": 0}
         return mover
 
@@ -47,16 +46,13 @@ class Sonda(object):
     def __init__(self, x, y, d):
         self.posicao = (int(x), int(y))
         self.direcao = d.upper()
-        print("Iniciando a  Sonda em {} na direcao {}".format(self.posicao,
-                                                            self.direcao))
+        print("Iniciando a  Sonda em {} na direcao {}".format(self.posicao, self.direcao))
 
     def mover(self, moviment):
-        self.posicao = (self.posicao[0] + moviment['x'],
-                         self.posicao[1] + moviment['y'])
+        self.posicao = (self.posicao[0] + moviment['x'], self.posicao[1] + moviment['y'])
 
     def calculando_proxima_posicao(self, moviment):
-        return (self.posicao[0] + moviment['x'],
-                self.posicao[1] + moviment['y'])
+        return (self.posicao[0] + moviment['x'], self.posicao[1] + moviment['y'])
 
     def obter_direcao(self, comando):
         self.direcao = Direcoes.proxima_direcao(comando, self.direcao)
